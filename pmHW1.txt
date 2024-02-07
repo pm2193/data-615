@@ -1,0 +1,59 @@
+1. in my home directory the files that are there are my base files (documets, 3d objects, music, favorites, applicaiton data, downloads, and pinned folders)
+switch back to my working directory/notes: 
+"cd "C:\Users\pjm11\OneDrive\Documents\Hamid\Test\hw1""
+
+2. cd ~/../../.. takes you to the root directory. each segment of .. takes you to the parent directory from the workign directory you are on. 3 segments of .. effectively takes you to 3 levels of parent directories, which is your root directory.
+
+3. The a flag displays all files, including hidden ones. The 1 flag shows detailed info about all of the files in the directory.
+
+4. touch newhwfile.txt
+$ stat newhwfile.txt
+  File: newhwfile.txt
+  Size: 0               Blocks: 0          IO Block: 65536  regular empty file
+Device: cc9ca5d0h/3432818128d   Inode: 17169973579490090  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (197609/   pjm11)   Gid: (197609/ UNKNOWN)
+Access: 2024-02-06 22:25:00.940183000 -0500
+Modify: 2024-02-06 22:25:00.940183000 -0500
+Change: 2024-02-06 22:25:02.068468700 -0500
+ Birth: 2024-02-06 22:25:00.934866400 -0500
+
+You get detailed information about the newly created file. The name of the file, when it was created, modified, and changed, also file size, device ID, permissions, flags, etc.  
+
+5.
+ ls
+newhwfile.txt  pmHW1.txt
+
+$ ls pmHW1.txt
+pmHW1.txt
+
+$ ls -l
+total 1
+-rw-r--r-- 1 pjm11 197609  0 Feb  6 22:25 newhwfile.txt
+-rw-r--r-- 1 pjm11 197609 29 Feb  6 21:57 pmHW1.txt
+
+I get detailed information about each file, who the user is, the size of the file, the date adn time it was created. 
+
+6. 
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ echo "This is my first line" >> newhwfile.txt
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ cat newhwfile.txt
+This is my first line
+
+
+7. 
+$ touch newhwfile.txt
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ ls -l newhwfile.txt
+-rw-r--r-- 1 pjm11 197609 22 Feb  6 22:37 newhwfile.txt
+
+The timestamp of the file is updated from 22:25 to 22:37
+
+
+
+
+
+
+
