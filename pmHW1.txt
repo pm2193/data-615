@@ -53,6 +53,55 @@ The timestamp of the file is updated from 22:25 to 22:37
 
 
 
+commit and push completed assignment to the repository: 
+
+
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ git init
+Reinitialized existing Git repository in C:/Users/pjm11/OneDrive/Documents/Hamid/Test/hw1/.git/
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ git add pmHW1.txt
+warning: in the working copy of 'pmHW1.txt', LF will be replaced by CRLF the next time Git touches it
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ git status
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   pmHW1.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        newhwfile.txt
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ git commit pmHW1.txt -m "Commit of first hw assignemnt"
+warning: in the working copy of 'pmHW1.txt', LF will be replaced by CRLF the next time Git touches it
+[main (root-commit) 8e436dd] Commit of first hw assignemnt
+ 1 file changed, 59 insertions(+)
+ create mode 100644 pmHW1.txt
+
+pjm11@DESKTOP-ML34Q3S MINGW64 ~/OneDrive/Documents/Hamid/Test/hw1 (main)
+$ git push
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 1.12 KiB | 1.13 MiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To github.com:pm2193/hw1.git
+ * [new branch]      main -> main
+
+
+URL to github page where the file was commited: 
+https://github.com/pm2193/hw1
+
+
 
 
 
