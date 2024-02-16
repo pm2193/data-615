@@ -33,6 +33,11 @@ map(dt, mean)
 map(dt, sd)
 ```
 
+1c 
+```{r}
+map(dt, ~sqrt(.x))
+```
+
 
 
 
