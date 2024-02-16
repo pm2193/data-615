@@ -1,0 +1,45 @@
+---
+title: "hw 2"
+author: "Patrick Marino"
+date: "2024-02-16"
+output: html_document
+---
+
+
+```{r}
+library(tidyverse)
+tribble( ~x, ~y, ~w, ~z,
+210, 300, 220, 180,
+102, 100, 119, 187,
+176, 175, 188, 173,
+87, 95, 91, 94,
+202, 210, 234, 218,
+110, 122, 131, 128,
+) -> dt
+dt
+
+```
+
+
+problem 2. 
+```{r}
+exp_means <- function(data, n_samples = 10000, sample_size = 5) {
+  means <- numeric(n_samples)
+   for (i in 1:n_samples) {
+   
+    samples <- rexp(sample_size)
+    
+    means[i] <- mean(samples)
+  }
+  
+  return(means)
+}
+
+means <- simulate_exponential_means(dt)
+length(means)
+
+ggplot()+
+  geom_histogram(aes(x = means, y = after_stat(density)), bins = 30, fill = "skyblue", color = "black")
+ 
+```
+
