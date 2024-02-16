@@ -20,6 +20,16 @@ dt
 
 ```
 
+problem 1
+```{r}
+library(purrr)
+map(dt, mean)
+
+```
+
+
+
+
 
 problem 2. 
 ```{r}
