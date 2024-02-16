@@ -21,12 +21,17 @@ dt
 ```
 
 problem 1
+a
 ```{r}
 library(purrr)
 map(dt, mean)
 
 ```
 
+1-b 
+```{r}
+map(dt, sd)
+```
 
 
 
