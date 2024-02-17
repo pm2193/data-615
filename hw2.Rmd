@@ -86,6 +86,20 @@ ggplot()+
 replicate(10000, mean(rexp(5, rate = 1)))
 ```
 
+2. c
+
+```{r}
+exp_many<- function(n = 10000, ss = c(5,10,20)) {
+  for(i in ss) {
+    means<- replicate(n, mean(rexp(i, rate = 1)))
+    
+    hist(means, breaks = 30, col = "skyblue", border = "black",
+      main = paste("Hist of Means (Sample Size =", i, ")"))
+  }
+}
+mm<- exp_many()
+
+```
 
 
 
