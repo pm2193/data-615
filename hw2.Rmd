@@ -102,5 +102,15 @@ mm<- exp_many()
 ```
 
 
+3. 
+```{r}
+Sd_mtcars <- vector("double", ncol(mtcars))
+for(i in seq_along(mtcars)) {
+  Sd_mtcars[[i]] <- sd(mtcars[[i]])
+}
+ Sd_mtcars
+
+```
+
 
 
