@@ -38,6 +38,17 @@ map(dt, sd)
 map(dt, ~sqrt(.x))
 ```
 
+1D
+```{r}
+fiven <- summarise_all(dt, list(mean = mean,
+                             median = median, 
+                             max = max, 
+                             min = min, 
+                             q1 = function(x) quantile(x, probs = 0.25), 
+                             q3 = function(x) quantile(x, probs = 0.75)))
+fiven
+
+```
 
 
 
