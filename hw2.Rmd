@@ -54,11 +54,11 @@ fiven
 
 problem 2. 
 ```{r}
-exp_means <- function(data, n_samples = 10000, sample_size = 5) {
-  means <- numeric(n_samples)
-   for (i in 1:n_samples) {
+exp_means <- function(data, n = 10000, SS = 5) {
+  means <- numeric(n)
+   for (i in 1:n) {
    
-    samples <- rexp(sample_size)
+    samples <- rexp(SS)
     
     means[i] <- mean(samples)
   }
@@ -66,7 +66,7 @@ exp_means <- function(data, n_samples = 10000, sample_size = 5) {
   return(means)
 }
 
-means <- simulate_exponential_means(dt)
+means <- exp_means(dt)
 length(means)
 
 ggplot()+
