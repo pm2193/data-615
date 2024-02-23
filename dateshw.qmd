@@ -1,0 +1,76 @@
+---
+title: "HW dates"
+format: html
+editor: visual
+---
+
+## Dates 
+
+1.  For each month, calculate the proportion of rides made on a given day of the month. Then make box plots of the proportions of ridership vs day of the weak. But exclude any days from 2004 and 2005.
+
+```{r}
+library(lubridate)
+library(readr)
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+rider<- read.csv("https://dcgerard.github.io/stat_412_612/data/wmata_ridership.csv")
+
+rider$Date<- ymd(rider$Date)
+
+
+rider<- mutate(rider, Month = month(Date), 
+               Day = day(Date), 
+               Day_of_Week = weekdays(Date), 
+               Year = year(Date))
+
+rider_summary <- rider %>%
+  group_by(Month, Day_of_Week) %>%
+  summarise(total_rides = sum(Total)) %>%
+  group_by(Month) %>%
+  mutate(total_prop = total_rides / sum(total_rides))
+
+rider_summary %>%
+  filter(Year > 2005) %>%
+  ggplot(aes(x = Day_of_Week, y = total_prop)) +
+  geom_boxplot() +
+  ylab("Proportion of Ridership") +
+  xlab("Day of the Week") +
+  ggtitle("                         Proportion of Ridership vs Day of the Week")
+
+
+
+  
+  
+
+
+
+
+
+
+```
+
+```{r}
+rider2<- rider %>%
+  filter(year(Date) > 2005)
+
+
+rider3<- rider2 %>%
+  group_by(Day_of_Week) %>%
+  summarise(Day_Week_rides = sum(Total)) 
+  
+  day_tots <- sum(rider3$Day_Week_rides)
+  
+  rider3 %>% 
+    mutate(day_proportions = Day_Week_rides/day_tots) %>%
+    ggplot(aes(x = Day_of_Week, y = day_proportions)) +
+    geom_boxplot()
+  
+  
+
+
+
+
+```

@@ -77,13 +77,17 @@ ggplot()+
 2a 
 ```{r}
 
-  map_dbl(1:10000, ~mean(rexp(5, rate = 1)))
+ mean_map<- map_dbl(1:10000, ~mean(rexp(5, rate = 1)))
+ggplot()+
+  geom_histogram(aes(x = mean_map, y = after_stat(density)), bins = 30, fill = "skyblue", color = "black")
 ```
 
 2b 
 
 ```{r}
-replicate(10000, mean(rexp(5, rate = 1)))
+means_rep<- replicate(10000, mean(rexp(5, rate = 1)))
+ggplot()+
+  geom_histogram(aes(x = means_rep, y = after_stat(density)), bins = 30, fill = "skyblue", color = "black")
 ```
 
 2. c
