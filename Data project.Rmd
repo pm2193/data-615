@@ -7,35 +7,10 @@ output: html_document
 
 ```{r}
 library(gtrendsR)
-
-# Define keywords and other parameters
-keywords <- c("Israel genocide", "Israel terrorism")
-gprop <- "web"
-time <- "today 3-m"  # Last seven months
-hl <- "en-US"  # Language
-tz <- 0  # Timezone
-
-# Function to perform the query for each keyword
-get_trends_state <- function(keyword) {
-  # Define regions within the function
-  regions <- c("US")
-  
-  trends_state <- gtrends(keyword = keyword,
-                          geo = regions,
-                          time = time,
-                          gprop = gprop,
-                          hl = hl,
-                          tz = tz)
-  return(trends_state)
-}
-
-# Perform the query for each keyword
-trends_data <- lapply(keywords, get_trends_state)
-
-# View the results
-interest_over_time <- lapply(trends_data, function(trends) trends$interest_over_time)
-combined_interest <- do.call(rbind, interest_over_time)
-print(head(combined_interest))
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(maps)
 
 ```
 
@@ -45,40 +20,24 @@ print(head(combined_interest))
 res<- gtrends(c("Israel genocide", "Israel terrorism"),
         geo = c("US"), 
         time = "today 12-m")
-names(res)
+
 res1<- res$interest_by_region
 
-View(res1)
-```
-
-
-```{r}
-library(gtrendsR)
-library(ggplot2)
-
-# Query Google Trends data
-res <- gtrends(c("Israel genocide", "Israel terrorism"),
-               geo = c("US"), 
-               time = "today 12-m")
-
-# Extract interest by region data
-res1 <- res$interest_by_region
-interest_state <- res$interest_by_region
 
 ```
 
+
+
+
 ```{r}
-library(gtrendsR)
-library(ggplot2)
 
 # Extract interest over time data
 interest_over_time <- res$interest_over_time
 
+
 # Convert 'date' column to Date format
 interest_over_time$date <- as.Date(interest_over_time$date)
 
-# Convert 'hits' column to numeric, removing '<' if present
-interest_over_time$hits <- as.numeric(gsub('<', '', interest_over_time$hits))
 
 # Plot the interest over time
 p <- ggplot(interest_over_time, aes(x = date, y = hits, color = keyword)) +
@@ -94,13 +53,10 @@ print(p)
 ```
 
 
-```
 
 
 ```{r}
-library(ggplot2)
-library(dplyr)
-library(maps)
+
 
 # Load state map data
 state_map <- map_data("state")
@@ -113,6 +69,8 @@ my_df <- res1 %>%
 
 # Pivot the data to have separate columns for hits of each keyword
 my_df <- pivot_wider(data = my_df, names_from = keyword, values_from = hits)
+my_df$`Israel genocide` <- as.numeric(my_df$`Israel genocide`)
+my_df$`Israel terrorism` <- as.numeric(my_df$`Israel terrorism`)
 
 # Calculate the percentage difference
 final_data <- my_df %>%
@@ -145,52 +103,60 @@ ggplot(final_data, aes(x = long, y = lat, group = group, fill = `Israel terroris
   theme_minimal()
 ```
 
-```{r}
-library(dplyr)
 
-# Convert hits column to integer type
-res$interest_over_time$hits <- as.integer(res$interest_over_time$hits)
-res$interest_by_region$hits <- as.integer(res$interest_by_region$hits)
-res$interest_by_city$hits <- as.integer(res$interest_by_city$hits)
-
-# Combine the sublists into one dataframe
-combined_data <- bind_rows(res$interest_over_time, res$interest_by_region)
-# Check the structure of the combined dataframe
-str(combined_data)
-combined_data
-```
 
 ```{r}
-res_state <- res1 %>%
+
+state_interest<-  gtrends(c("Israel genocide", "Israel terrorism"),
+        geo = c("US"), 
+        time = "today 12-m")
+state_interest<- state_interest$interest_by_region
+state_interest <- state_interest %>%
+  mutate(hits = ifelse(hits == "" | hits == "<1", 0, as.numeric(hits)))
+
+State_interest_binary <- state_interest %>%
   mutate(keyword = ifelse(keyword == "Israel genocide", 1, 0))
 res_interest <- interest_over_time %>%
   mutate(keyword = ifelse(keyword == "Israel genocide", 1, 0))
-view(res3)
-res3$location <- as.factor(res3$location)
-res3$date<- as.facotr
 
-str(res3)
-view(res3)
+
+
+State_interest_binary$location <- as.factor(State_interest_binary$location)
+
+
+
 ```
 
 logistic regression model
 
 ```{r}
-location_lm<- glm(keyword ~ as.factor(location), data = res_state, family = "binomial")
+location_lm<- glm(keyword ~ location, data = State_interest_binary, family = "binomial")
 date_lm<- glm(keyword ~ date, data = res_interest, family = "binomial")
 
 summary(location_lm)
 summary(date_lm)
-interest_state$hits[is.na(interest_state$hits)] <- 0
-interest_over_time$hits[is.na(interest_over_time$hits)] <- 0
-hits_lm_state <- lm(hits ~ location, data = interest_state)
 
-summary(hits_lm_state)
-hits_date_lm<- lm(hits~date, data = interest_over_time)
-summary(hits_date_lm)
 ```
 
 
+```{r}
+state_interest<-  gtrends(c("Israel genocide", "Israel terrorism"),
+        geo = c("US"), 
+        time = "today 12-m")
+state_interest<- state_interest$interest_by_region
+state_interest <- state_interest %>%
+  mutate(hits = ifelse(hits == "" | hits == "<1", 0, as.numeric(hits)))
+
+
+
+interest_over_time$hits[is.na(interest_over_time$hits)] <- 0
+hits_lm_state <- lm(hits ~ location, data = state_interest)
+
+summary(hits_lm_state)
+
+hits_date_lm<- lm(hits~date, data = interest_over_time)
+summary(hits_date_lm)
+```
 
 
 
